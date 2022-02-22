@@ -324,7 +324,7 @@ public class TelaReuniao {
 			String datastr;
 			for(Reuniao r : lista) {
 				for(Participante p : r.getParticipantes())	{
-					datastr = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(r.getDatahora());
+					datastr = r.getDatahora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 					model.addRow(new String[]{r.getId()+"", datastr, r.getAssunto(), p.getNome()});
 				}
 			}

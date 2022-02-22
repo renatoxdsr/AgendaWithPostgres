@@ -3,8 +3,8 @@ package fachada;
  * IFPB - Curso Superior de Tec. em Sist. para Internet
  * Programação Orientada a Objetos
  * Prof. Fausto Maranhão Ayres
- * Grupo: Glauco Simões & Renato Silva
- * Setembro 2021
+ * Grupo: Christopher, Emanuel & Renato Xavier
+ * Novembro 2021
  **********************************/
 
 import java.sql.Date;
@@ -120,10 +120,10 @@ public class Fachada {
 		//inicio da transacao
 		DAO.begin();
 		
-		java.util.Date dth;
+		LocalDateTime dth;
 		try {
-			SimpleDateFormat  parser = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			dth  = parser.parse(datahora); 
+			DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+			dth  = LocalDateTime.parse(datahora, parser); 
 		}
 		catch(DateTimeParseException e) {
 			throw new Exception ("reuniao com formato de data invalido");
@@ -296,13 +296,13 @@ public class Fachada {
 		//remover o participante das reunioes que participa
 		//...
 		
+		ArrayList<Integer> lista = new ArrayList<>();
 		for(Reuniao r : p.getReunioes()) {
 			p.remover(r);
 			r.remover(p);
-			if(r.getTotalParticipantes() < 2) {
-				cancelarReuniao(r.getId());
-			}else {
 				daoreuniao.update(r);
+			if(r.getTotalParticipantes() < 2) {
+				lista.add(r.getId());
 			}
 		}
 		
@@ -310,6 +310,10 @@ public class Fachada {
 		daoparticipante.delete(p);	//...
 		//fim da transacao
 		DAO.commit();
+		for(Integer id: lista) {
+			cancelarReuniao(id);
+		}
+		
 		//enviar email para o participante apagado
 		enviarEmail(p.getEmail()," descadastro ",  "vc foi excluido da agenda");
 	}	

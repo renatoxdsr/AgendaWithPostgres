@@ -1,10 +1,15 @@
 package modelo;
 
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 /**********************************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
  * Programação Orientada a Objetos
  * Prof. Fausto Maranhão Ayres
  **********************************/
+
+@Entity 
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
 public class Convidado extends Participante {
 	private String empresa; 

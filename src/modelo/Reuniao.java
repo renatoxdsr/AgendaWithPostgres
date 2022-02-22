@@ -19,9 +19,8 @@ public class Reuniao {
 	private String assunto;
 	private ArrayList <Participante> participantes = new ArrayList <Participante>();
 
-	public Reuniao(Date dth, String assunto) 	{
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		this.datahora = format.format(dth);
+	public Reuniao(LocalDateTime datahora, String assunto) 	{
+		this.datahora = datahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 		this.assunto = assunto;
 	}
 
@@ -61,12 +60,12 @@ public class Reuniao {
 		this.id = id;
 	}
 
-	public Date getDatahora() throws ParseException 	{
-		return new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(this.datahora);
+	public LocalDateTime getDatahora() 	{
+		return LocalDateTime.parse(this.datahora, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 	}
 
-	public void setDatahora(Date dth) 	{
-		this.datahora = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(dth);
+	public void setDatahora(LocalDateTime dth) 	{
+		this.datahora = dth.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 	}
 
 	public String getAssunto() 	{

@@ -282,7 +282,7 @@ public class TelaParticipante {
 					model.addRow(new Object[]{p.getNome(), p.getEmail(),empresa, "sem reunioes"});
 				else
 					for(Reuniao r : p.getReunioes()) {
-						texto = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(r.getDatahora()) +" - "+r.getAssunto() ;
+						texto = r.getDatahora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) +" - "+r.getAssunto() ;
 						model.addRow(new Object[]{p.getNome(), p.getEmail(), empresa, texto});
 					}
 			}
